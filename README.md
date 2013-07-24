@@ -21,7 +21,9 @@ var server = new emweb.Server();
 server.start();
 ```
 
-By default, the server listens on port 80, the standard port used for HTTP, this requires root privileges.
+By default, the server reads files from './public/'. All files should be placed in here as forward slashes are stripped from requests.
+
+The server requires root privileges to run as it listens on port 80, the standard port used for HTTP.
 
 ```
 $ sudo node index
@@ -34,6 +36,9 @@ The server drops root privileges as soon as it is listening on port 80. This can
 ##### index.js
 ```javascript
 var server = new require('emweb').start();
+
+// change the public directory
+server.directory = './www/';
 
 // change the index page from index.html to home.html
 server.routes.default = 'home.html';
