@@ -21,7 +21,4 @@
     <note priority="high" time="1373248065">
         Implement directories safely, and properly with cache and etc
     </note>
-    <note priority="medium" time="1374632581">
-        Implement ipv6 binding support
-    </note>
 </todo>

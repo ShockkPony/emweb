@@ -94,7 +94,7 @@ exports.Server = function()
 		this.server = http.createServer();
 		this.log('HTTP', 'created');
 
-		this.server.listen(80, function(err)
+		var cb_listen = function(err)
 		{
 			if(err) console.log(err);
 
@@ -102,7 +102,10 @@ exports.Server = function()
 			{
 				process.setuid(process.env.SUDO_USER);
 			}
-		}.bind(this));
+		}.bind(this);
+
+		this.server.listen(80, cb_listen);
+
 		var addr = this.server.address();
 		this.log('HTTP', 'listening on ' + addr.address + ':' + addr.port);
 
