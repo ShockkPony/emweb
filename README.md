@@ -7,7 +7,7 @@ emweb is a micro web server designed to be lightweight and efficient.
 ### Installation
 
 ```
-npm install emweb
+$ npm install emweb
 ```
 
 ### Quick Start
