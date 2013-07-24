@@ -173,7 +173,7 @@ exports.Server = function()
 		else
 		{
 			response.setHeader('Content-Type', content_type);
-			this.handlers[route](request, response, request_url, data);
+			this.handlers[route].call(this, request, response, request_url, data);
 			response.end();
 		}
 	}
