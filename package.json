@@ -1,0 +1,33 @@
+{
+  "name": "emweb",
+  "version": "0.1",
+  "description": "emweb is a micro web server designed to be lightweight and efficient",
+  "author": {
+    "name": "Shockk",
+    "email": "shokku.ra@gmail.com",
+    "url": "https://github.com/ShockkPony/"
+  },
+  "contributors": [
+    {
+      "name": "Shockk",
+      "email": "shokku.ra@gmail.com",
+      "url": "https://github.com/ShockkPony/"
+    }
+  ],
+  "keywords": [
+    "emweb",
+    "http",
+    "httpd",
+    "web",
+    "server",
+    "micro",
+    "lightweight",
+    "efficient"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ShockkPony/emweb.git"
+  },
+  "license": "BSD",
+  "main": "index"
+}
