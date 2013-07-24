@@ -21,9 +21,7 @@ var server = new emweb.Server();
 server.start();
 ```
 
-By default, the server reads files from './public/'. All files should be placed in here as forward slashes are stripped from requests.
-
-The server requires root privileges to run as it listens on port 80, the standard port used for HTTP.
+By default, the server reads files from `./public/`. All files should be placed in here as forward slashes are stripped from requests. The server requires root privileges to run as it listens on port 80, the standard port used for HTTP.
 
 ```
 $ sudo node index
