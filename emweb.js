@@ -119,7 +119,7 @@ exports.Server = function()
 	this.cb_request = function(request, response)
 	{
 		var request_url = url.parse(request.url, true);
-		var safe_pathname = request_url.pathname.replace(/[^A-Za-z0-9_\-\.]/g, '');
+		var safe_pathname = request_url.pathname.replace(/[^A-Za-z0-9_\-\.%]/g, '');
 		var safe_path = (safe_pathname !== '') ? safe_pathname : this.routes.default;
 
 		this.log('HTTP', 'request from ' + request.socket.remoteAddress + ' for ' + safe_path);
