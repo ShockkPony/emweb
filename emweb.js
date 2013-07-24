@@ -16,6 +16,8 @@ exports.Server = function()
 	this.routes.default = 'index.html';
 	this.routes[404] = '404.html';
 
+	this.directory = './public/';
+
 	this.handlers = {
 		fallback: function(request, response, request_url, data)
 		{
@@ -33,7 +35,7 @@ exports.Server = function()
 		{
 			try
 			{
-				var data = fs.readFileSync('./public/' + name);
+				var data = fs.readFileSync(this.directory + name);
 				this.file_cache[name] = data;
 				this.log('CACHE', 'cached ' + name);
 			}
@@ -56,7 +58,7 @@ exports.Server = function()
 		this.start_date = new Date();
 
 		// get all filenames in the public directory
-		fs.readdir('./public/', function(err_dir, files)
+		fs.readdir(this.directory, function(err_dir, files)
 		{
 			if(err_dir)
 			{
@@ -76,7 +78,7 @@ exports.Server = function()
 		if(this.do_cache_updates === true)
 		{
 			// set up a file system watch on the public directory
-			fs.watch('./public/', function(e, name)
+			fs.watch(this.directory, function(e, name)
 			{
 				// ignore vi/vim magic files
 				if(name.match(/^\./) || name.match(/~$/) || name === '4913') return;
@@ -139,7 +141,7 @@ exports.Server = function()
 		{
 			try
 			{
-				data = fs.readFileSync('public/' + safe_path);
+				data = fs.readFileSync(this.directory + safe_path);
 			}
 			catch(e)
 			{
