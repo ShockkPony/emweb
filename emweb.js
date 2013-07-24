@@ -5,7 +5,10 @@ var url = require('url');
 exports.Server = function()
 {
 	this.do_cache_updates = true;
+
 	this.drop_root_privilege = true;
+	this.uid = parseInt(process.env.SUDO_UID);
+	this.gid = parseInt(process.env.SUDO_GID);
 
 	this.file_cache = {};
 	this.content_types = {};
@@ -102,7 +105,8 @@ exports.Server = function()
 
 			if(this.drop_root_privilege === true)
 			{
-				process.setuid(process.env.SUDO_USER);
+				process.setgid(this.gid);
+				process.setuid(this.uid);
 			}
 		}.bind(this);
 

@@ -36,7 +36,11 @@ The server drops root privileges as soon as it is listening on port 80. This can
 var server = new require('emweb').start();
 
 // change the public directory
-server.directory = './www/';
+server.directory = '/var/www/';
+
+// set user id and group id - must be able to read /var/www/
+server.uid = 'emweb';
+server.gid = 'emweb';
 
 // change the index page from index.html to home.html
 server.routes.default = 'home.html';
