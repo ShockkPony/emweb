@@ -5,8 +5,8 @@ var url = require('url');
 exports.Server = function()
 {
 	this.do_cache_updates = true;
-
 	this.drop_root_privilege = true;
+
 	this.uid = parseInt(process.env.SUDO_UID);
 	this.gid = parseInt(process.env.SUDO_GID);
 
@@ -16,10 +16,13 @@ exports.Server = function()
 	this.routes = {};
 	this.cache_ignores = {};
 
+	this.directory = './public/';
 	this.routes.default = 'index.html';
 	this.routes[404] = '404.html';
 
-	this.directory = './public/';
+	this.date = new Date();
+	this.date_iso = this.date.toISOString();
+	this.date_interval = 250;
 
 	this.handlers = {
 		fallback: function(request, response, request_url, data)
@@ -57,8 +60,15 @@ exports.Server = function()
 	// start the server
 	this.start = function()
 	{
+		// start asynchronous date updates
+		setInterval(function()
+		{
+			this.date.setTime(Date.now());
+			this.date_iso = this.date.toISOString();
+		}.bind(this), this.date_interval);
+
 		// store the date and time the server was started at
-		this.start_date = new Date();
+		this.start_date = new Date(this.date.getTime());
 
 		// get all filenames in the public directory
 		fs.readdir(this.directory, function(err_dir, files)
@@ -188,15 +198,6 @@ exports.Server = function()
 
 	this.log = function(plugin, message)
 	{
-		if(this.today === undefined)
-		{
-			this.today = new Date().toUTCString();
-			setInterval(function()
-			{
-				this.today = new Date().toUTCString();
-			}.bind(this), 1000);
-		}
-
-		console.log(this.today + ' [' + plugin + '] ' + message);
+		console.log(this.date_iso + ' [' + plugin + '] ' + message);
 	}
 }
