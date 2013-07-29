@@ -16,13 +16,15 @@ exports.Server = function()
 	this.routes = {};
 	this.cache_ignores = {};
 
-	this.directory = './public/';
+	this.directory = process.cwd() + '/public/';
 	this.routes.default = 'index.html';
 	this.routes[404] = '404.html';
 
 	this.date = new Date();
 	this.date_iso = this.date.toISOString();
 	this.date_interval = 250;
+
+	this.port = 80;
 
 	this.handlers = {
 		fallback: function(request, response, request_url, data)
@@ -115,12 +117,12 @@ exports.Server = function()
 
 			if(this.drop_root_privilege === true)
 			{
-				process.setgid(this.gid);
-				process.setuid(this.uid);
+				if(!isNaN(this.gid)) process.setgid(this.gid);
+				if(!isNaN(this.uid)) process.setuid(this.uid);
 			}
 		}.bind(this);
 
-		this.server.listen(80, cb_listen);
+		this.server.listen(this.port, cb_listen);
 
 		var addr = this.server.address();
 		this.log('HTTP', 'listening on ' + addr.address + ':' + addr.port);
