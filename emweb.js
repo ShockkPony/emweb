@@ -161,8 +161,10 @@ exports.Server = function()
 			}
 			else if(typeof this.routes[safe_path] === 'function')
 			{
-				this.routes[safe_path].call(this, request, response, request_url, '');
-				response.end();
+				if(this.routes[safe_path].call(this, request, response, request_url, '') !== false)
+				{
+					response.end();
+				}
 				return;
 			}
 		}
@@ -190,19 +192,23 @@ exports.Server = function()
 			{
 				response.setHeader('Content-Type', 'text/plain');
 				response.write('404 Not Found\n404 Not Found for 404 Not Found document');
+				response.end();
 			}
 			else
 			{
-				this.do_route(this.routes[404], request, response, request_url, true);
+				if(this.do_route(this.routes[404], request, response, request_url, true) !== false)
+				{
+					response.end();
+				}
 			}
-
-			response.end();
 		}
 		else
 		{
 			response.setHeader('Content-Type', content_type);
-			this.handlers[route].call(this, request, response, request_url, data);
-			response.end();
+			if(this.handlers[route].call(this, request, response, request_url, data) !== false)
+			{
+				response.end();
+			}
 		}
 	}
 
