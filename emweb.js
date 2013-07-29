@@ -149,7 +149,23 @@ exports.Server = function()
 		var parts = safe_path.split('.');
 		var ext = (parts.length > 1) ? parts[parts.length - 1] : 'html';
 		var content_type = (this.content_types[ext] !== undefined) ? this.content_types[ext] : 'text/html';
-		var route = (this.handlers[ext] !== undefined) ? ext : 'fallback';
+		var route = 'fallback';
+
+		if(this.handlers[ext] !== undefined) route = ext;
+		else if(this.routes[safe_path] !== undefined)
+		{
+			if(typeof this.routes[safe_path] === 'string')
+			{
+				this.do_route(this.routes[safe_path], request, response, request_url, false);
+				return;
+			}
+			else if(typeof this.routes[safe_path] === 'function')
+			{
+				this.routes[safe_path].call(this, request, response, request_url, '');
+				response.end();
+				return;
+			}
+		}
 
 		var data = this.file_cache[safe_path];
 
