@@ -72,6 +72,9 @@ server.handlers.getjson = function(request, response, request_url, data)
 	response.write(data);
 }
 
+// listen on port 1337
+server.port = 1337;
+
 // start the server!
 server.start();
 ```
