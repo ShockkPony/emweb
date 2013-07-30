@@ -29,5 +29,11 @@
     "url": "https://github.com/ShockkPony/emweb.git"
   },
   "license": "BSD",
-  "main": "index"
+  "main": "index",
+  "scripts": {
+    "test": "vows --spec --isolate test/*"
+  },
+  "devDependencies": {
+    "vows": "*"
+  }
 }
