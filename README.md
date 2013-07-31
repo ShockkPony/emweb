@@ -77,6 +77,9 @@ server.handlers.getjson = function(request, response, request_url, data)
 // listen on port 1337
 server.port = 1337;
 
+// disable logging
+server.do_log = false;
+
 // start the server!
 server.start();
 ```
