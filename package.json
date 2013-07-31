@@ -1,6 +1,6 @@
 {
   "name": "emweb",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "emweb is a micro web server designed to be lightweight and efficient.",
   "author": {
     "name": "Shockk",
