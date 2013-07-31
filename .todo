@@ -12,11 +12,17 @@
     <note priority="veryhigh" time="1373152892" done="1373238610">
         Add ability to not cache certain file types (PNGs etc) and files over a certain size
     </note>
+    <note priority="veryhigh" time="1374631763" done="1374687107">
+        Write README
+    </note>
     <note priority="high" time="1372886954" done="1372904273">
         Move readFile stuff into function and have 404 route back to 404.html
     </note>
-    <note priority="veryhigh" time="1374631763" done="1374687107">
-        Write README
+    <note priority="veryhigh" time="1375297383">
+        Make default content type configurable
+    </note>
+    <note priority="veryhigh" time="1375298641">
+        Modify cache ignores to accept a number for the max size to cache
     </note>
     <note priority="high" time="1373248065">
         Implement directories safely, and properly with cache and etc
