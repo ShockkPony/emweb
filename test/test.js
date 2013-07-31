@@ -158,4 +158,29 @@ vows.describe('emweb').addBatch(
 			}
 		}
 	}
+}).addBatch(
+{
+	'when stopping a server':
+	{
+		topic: function()
+		{
+			var ret = null;
+
+			try
+			{
+				server.server.close();
+			}
+			catch(e)
+			{
+				console.log(e);
+				ret = e;
+			}
+
+			return ret;
+		},
+		'does not throw an error': function(err)
+		{
+			assert.isNull(err);
+		}
+	}
 }).export(module);
