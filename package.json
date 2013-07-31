@@ -31,6 +31,7 @@
   "license": "BSD",
   "main": "index",
   "scripts": {
+    "start": "node lib/start.js",
     "test": "vows --spec --isolate test/*"
   },
   "devDependencies": {
