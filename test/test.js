@@ -8,14 +8,22 @@ var server;
 var request = function(path)
 {
 	var promise = new events.EventEmitter();
-	http.get('http://localhost:' + server.port + '/' + path, function(response)
+
+	var options = {
+		hostname: 'localhost',
+		port: server.port,
+		path: '/' + path,
+		method: 'GET'
+	};
+
+	http.request(options, function(response)
 	{
 		promise.emit('success', response);
 		response.socket.destroy();
 	}).on('error', function(err)
 	{
 		promise.emit('error', err);
-	});
+	}).end();
 	return promise;
 }
 
