@@ -5,6 +5,20 @@ var assert = require('assert');
 var emweb = require('../lib/emweb');
 var server;
 
+var request = function(path)
+{
+	var promise = new events.EventEmitter();
+	http.get('http://localhost:' + server.port + '/' + path, function(response)
+	{
+		promise.emit('success', response);
+		response.socket.destroy();
+	}).on('error', function(err)
+	{
+		promise.emit('error', err);
+	});
+	return promise;
+}
+
 vows.describe('emweb').addBatch(
 {
 	'a server':
@@ -40,22 +54,13 @@ vows.describe('emweb').addBatch(
 				topic: function()
 				{
 					server.file_cache[server.routes.default] = '<html></html>';
-
-					var promise = new events.EventEmitter();
-					http.get('http://localhost:' + server.port + '/', function(response)
-					{
-						promise.emit('success', response);
-					}).on('error', function(err)
-					{
-						promise.emit('error', err);
-					});
-					return promise;
+					return request('/');
 				},
 				'does not throw an error': function(err, response)
 				{
 					assert.isNull(err);
 				},
-				'returns status code 200': function(err, response)
+				'returns status code `200`': function(err, response)
 				{
 					assert.isObject(response);
 					assert.strictEqual(response.statusCode, 200);
@@ -65,25 +70,89 @@ vows.describe('emweb').addBatch(
 					topic: function()
 					{
 						server.file_cache[server.routes.default] = undefined;
-
-						var promise = new events.EventEmitter();
-						http.get('http://localhost:' + server.port + '/', function(response)
-						{
-							promise.emit('success', response);
-						}).on('error', function(err)
-						{
-							promise.emit('error', err);
-						});
-						return promise;
+						return request('');
 					},
 					'does not throw an error': function(err, response)
 					{
 						assert.isNull(err);
 					},
-					'returns status code 404': function(err, response)
+					'returns status code `404`': function(err, response)
 					{
 						assert.isObject(response);
 						assert.strictEqual(response.statusCode, 404);
+					}
+				}
+			},
+			'when a client requests `/qwerty.html`':
+			{
+				topic: function()
+				{
+					server.file_cache['qwerty.html'] = '<html></html>';
+					return request('qwerty.html');
+				},
+				'does not throw an error': function(err, response)
+				{
+					assert.isNull(err);
+				},
+				'returns status code `200`': function(err, response)
+				{
+					assert.isObject(response);
+					assert.strictEqual(response.statusCode, 200);
+				},
+				'if missing':
+				{
+					topic: function()
+					{
+						server.file_cache['qwerty.html'] = undefined;
+						return request('qwerty.html');
+					},
+					'does not throw an error': function(err, response)
+					{
+						assert.isNull(err);
+					},
+					'returns status code `404`': function(err, response)
+					{
+						assert.isObject(response);
+						assert.strictEqual(response.statusCode, 404);
+					}
+				}
+			},
+			'when a client requests `routes[404]`':
+			{
+				topic: function()
+				{
+					server.file_cache[server.routes[404]] = '<html></html>';
+					return request(server.routes[404]);
+				},
+				'does not throw an error': function(err, response)
+				{
+					assert.isNull(err);
+				},
+				'returns status code `404`': function(err, response)
+				{
+					assert.isObject(response);
+					assert.strictEqual(response.statusCode, 200);
+				},
+				'if missing':
+				{
+					topic: function()
+					{
+						server.file_cache[server.routes[404]] = undefined;
+						return request(server.routes[404]);
+					},
+					'does not throw an error': function(err, response)
+					{
+						assert.isNull(err);
+					},
+					'returns statusCode `404`': function(err, response)
+					{
+						assert.isObject(response);
+						assert.strictEqual(response.statusCode, 404);
+					},
+					'returns content type `text/plain`': function(err, response)
+					{
+						assert.isObject(response);
+						assert.strictEqual(response.headers['content-type'], 'text/plain');
 					}
 				}
 			}
