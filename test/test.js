@@ -19,7 +19,7 @@ var request = function(path)
 	http.request(options, function(response)
 	{
 		promise.emit('success', response);
-		response.socket.destroy();
+		if(response.socket) response.socket.destroy();
 	}).on('error', function(err)
 	{
 		promise.emit('error', err);
