@@ -80,6 +80,9 @@ server.port = 1337;
 // disable logging
 server.do_log = false;
 
+// for some weird reason, change the default content type to javascript
+server.content_types.default = 'application/javascript';
+
 // start the server!
 server.start();
 ```
