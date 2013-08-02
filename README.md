@@ -77,6 +77,9 @@ server.handlers.getjson = function(request, response, request_url, data)
 // listen on port 1337
 server.port = 1337;
 
+// bind to all ipv4 AND ipv6 hosts
+server.bind_host = '::';
+
 // disable logging
 server.do_log = false;
 
