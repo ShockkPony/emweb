@@ -22,7 +22,12 @@
     "server",
     "micro",
     "lightweight",
-    "efficient"
+    "efficient",
+    "cache",
+    "caching",
+    "static",
+    "dynamic",
+    "extensible"
   ],
   "repository": {
     "type": "git",
@@ -38,6 +43,6 @@
     "vows": "*"
   },
   "engines": {
-    "node": ">=0.6"
+    "node": ">=0.8"
   }
 }
