@@ -58,9 +58,14 @@ server.content_types.mp4 = 'video/mp4';
 server.content_types.txt = 'text/plain';
 server.content_types.getjson = 'application/json';
 
-// ignore caching certain file types to avoid excessive memory usage
-server.cache_ignores.png = true;
+// ignore caching all mp4 files
 server.cache_ignores.mp4 = true;
+
+// ignore caching png files IF over 400KiB in size
+server.cache_ignores.png = 409600;
+
+// ignore caching OTHER files IF over 100KiB in size
+server.cache_ignores.default = 102400;
 
 // ignore certain file types
 server.handlers.log = false;
