@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/ShockkPony/emweb.png?branch=master)](https://travis-ci.org/ShockkPony/emweb)
-
 # emweb
 
 emweb is a micro web server designed to be lightweight and efficient.
@@ -33,64 +32,69 @@ The server drops root privileges as soon as it is listening on port 80. This can
 
 ### Example
 
+The server attempts to read additional config from `./config.js` by default.
+
 ##### index.js
 ```javascript
 var server = new require('emweb').start();
+```
 
-// change the public directory
-server.directory = '/var/www/';
-
-// set user id and group id - must be able to read /var/www/
-server.uid = 'emweb';
-server.gid = 'emweb';
-
-// change the index page from index.html to home.html
-server.routes.default = 'home.html';
-
-// change the 404 page from 404.html to notfound.html
-server.routes[404] = 'notfound.html';
-
-// map common file types to content types
-server.content_types.css = 'text/css';
-server.content_types.png = 'image/png';
-server.content_types.gif = 'image/gif';
-server.content_types.mp4 = 'video/mp4';
-server.content_types.txt = 'text/plain';
-server.content_types.getjson = 'application/json';
-
-// ignore caching all mp4 files
-server.cache_ignores.mp4 = true;
-
-// ignore caching png files IF over 400KiB in size
-server.cache_ignores.png = 409600;
-
-// ignore caching OTHER files IF over 100KiB in size
-server.cache_ignores.default = 102400;
-
-// ignore certain file types
-server.handlers.log = false;
-server.handlers.bak = false;
-server.handlers.db = false;
-server.handlers.json = false;
-
-// an example handler, just for demonstration purposes
-server.handlers.getjson = function(request, response, request_url, data)
+##### config.js
+```javascript
+module.exports = function()
 {
-	response.write(data);
+	// change the public directory
+	this.directory = '/var/www/';
+
+	// set user id and group id - must be able to read /var/www/
+	this.uid = 'emweb';
+	this.gid = 'emweb';
+
+	// change the index page from index.html to home.html
+	this.routes.default = 'home.html';
+
+	// change the 404 page from 404.html to notfound.html
+	this.routes[404] = 'notfound.html';
+
+	// map common file types to content types
+	this.content_types.css = 'text/css';
+	this.content_types.png = 'image/png';
+	this.content_types.gif = 'image/gif';
+	this.content_types.mp4 = 'video/mp4';
+	this.content_types.txt = 'text/plain';
+	this.content_types.getjson = 'application/json';
+
+	// ignore caching all mp4 files
+	this.cache_ignores.mp4 = true;
+
+	// ignore caching png files IF over 400KiB in size
+	this.cache_ignores.png = 409600;
+
+	// ignore caching OTHER files IF over 100KiB in size
+	this.cache_ignores.default = 102400;
+
+	// don't handle certain file types
+	this.handlers.log = false;
+	this.handlers.bak = false;
+	this.handlers.db = false;
+	this.handlers.json = false;
+
+	// an example handler, just for demonstration purposes
+	this.handlers.getjson = function(request, response, request_url, data)
+	{
+		response.write(data);
+	}
+
+	// listen on port 1337
+	this.port = 1337;
+
+	// bind to all ipv4 AND ipv6 hosts
+	this.bind_host = '::';
+
+	// disable logging
+	this.do_log = false;
+
+	// for some weird reason, change the default content type to javascript
+	this.content_types.default = 'application/javascript';
 }
-
-// listen on port 1337
-server.port = 1337;
-
-// bind to all ipv4 AND ipv6 hosts
-server.bind_host = '::';
-
-// disable logging
-server.do_log = false;
-
-// for some weird reason, change the default content type to javascript
-server.content_types.default = 'application/javascript';
-
-// start the server!
-server.start();
 ```
