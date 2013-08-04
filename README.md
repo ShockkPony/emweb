@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/ShockkPony/emweb.png?branch=master)](https://travis-ci.org/ShockkPony/emweb)
-# emweb
+# emweb [![Build Status](https://travis-ci.org/ShockkPony/emweb.png?branch=master)](https://travis-ci.org/ShockkPony/emweb)
 
 emweb is a micro web server designed to be lightweight and efficient.
 
