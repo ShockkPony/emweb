@@ -125,6 +125,28 @@ vows.describe('emweb').addBatch(
 					}
 				}
 			},
+			'when a client requests `/test.htm` from disk':
+			{
+				topic: function()
+				{
+					server.cache_ignores.htm = true;
+					return request('test.htm');
+				},
+				'does not throw an error': function(err, response)
+				{
+					assert.isNull(err);
+				},
+				'returns status code `200`': function(err, response)
+				{
+					assert.isObject(response);
+					assert.strictEqual(response.statusCode, 200);
+				},
+				'returns default content type': function(err, response)
+				{
+					assert.isObject(response);
+					assert.strictEqual(response.headers['content-type'], server.content_types.default);
+				}
+			},
 			'when a client requests `routes[404]`':
 			{
 				topic: function()
