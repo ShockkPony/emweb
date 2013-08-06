@@ -37,7 +37,7 @@
   "main": "index",
   "scripts": {
     "start": "node lib/start.js",
-    "test": "vows --spec --isolate test/*"
+    "test": "vows --spec --isolate test/*.js"
   },
   "devDependencies": {
     "vows": "*"

@@ -129,6 +129,7 @@ vows.describe('emweb').addBatch(
 			{
 				topic: function()
 				{
+					server.directory = process.cwd() + '/test/public/';
 					server.cache_ignores.htm = true;
 					return request('test.htm');
 				},
