@@ -125,13 +125,36 @@ vows.describe('emweb').addBatch(
 					}
 				}
 			},
-			'when a client requests `/test.htm` from disk':
+			'when a client requests `/explicit_cache_ignore.htm` from disk with explicit cache ignore on `htm`':
 			{
 				topic: function()
 				{
 					server.directory = process.cwd() + '/test/public/';
 					server.cache_ignores.htm = true;
-					return request('test.htm');
+					return request('explicit_cache_ignore.htm');
+				},
+				'does not throw an error': function(err, response)
+				{
+					assert.isNull(err);
+				},
+				'returns status code `200`': function(err, response)
+				{
+					assert.isObject(response);
+					assert.strictEqual(response.statusCode, 200);
+				},
+				'returns default content type': function(err, response)
+				{
+					assert.isObject(response);
+					assert.strictEqual(response.headers['content-type'], server.content_types.default);
+				}
+			},
+			'when a client requests `/size_cache_ignore.htm` from disk with size cache ignore on `htm`':
+			{
+				topic: function()
+				{
+					server.directory = process.cwd() + '/test/public/';
+					server.cache_ignores.htm = 0;
+					return request('size_cache_ignore.htm');
 				},
 				'does not throw an error': function(err, response)
 				{
