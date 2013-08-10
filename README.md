@@ -1,10 +1,8 @@
 # emweb [![Build Status](https://travis-ci.org/ShockkPony/emweb.png?branch=master)](https://travis-ci.org/ShockkPony/emweb)
 
-emweb is a micro web server designed to be lightweight and efficient.
+emweb is a micro web server designed to be lightweight and efficient. emweb supports [mods](https://npmjs.org/package/mods).
 
 ## Usage
-
-emweb supports [mods](https://npmjs.org/package/mods)
 
 ### Installation
 
