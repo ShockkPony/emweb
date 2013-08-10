@@ -39,6 +39,9 @@
     "start": "node lib/start.js",
     "test": "vows --spec --isolate test/*.js"
   },
+  "dependencies": {
+    "mods": "*"
+  },
   "devDependencies": {
     "vows": "*"
   },

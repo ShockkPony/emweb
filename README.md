@@ -4,6 +4,8 @@ emweb is a micro web server designed to be lightweight and efficient.
 
 ## Usage
 
+emweb supports [mods](https://npmjs.org/package/mods)
+
 ### Installation
 
 ```
